@@ -27,16 +27,13 @@ public class Main {
         final String inputFilePath = "src/main/resources/reportToRead.csv";
         final String outputFilePath = "src/main/resources/finalReport.csv";
 
-        // 1. Read the data from the input CSV file
         FileReader fileReader = new FileReaderImpl();
         final List<String> inputReport = fileReader.read(inputFilePath);
 
-        // 2. Convert the incoming data into FruitTransactions list
         DataConverter dataConverter = new DataConverterImpl();
         final List<FruitTransaction> transactions = dataConverter
                 .convertToTransaction(inputReport);
 
-        // 3. Create and file the map with all OperationHandler implementations
         final Map<FruitTransaction.Operation, OperationHandler> operationHandlers =
                 new HashMap<>();
         operationHandlers.put(FruitTransaction.Operation.BALANCE, new BalanceOperation());
@@ -46,15 +43,12 @@ public class Main {
         final OperationStrategy operationStrategy =
                 new OperationStrategyImpl(operationHandlers);
 
-        // 4. Process the incoming transactions with applicable OperationHandler implementations
         ShopService shopService = new ShopServiceImpl(operationStrategy);
         shopService.process(transactions);
 
-        // 5. Generate report based on the current Storage state
         ReportGenerator reportGenerator = new ReportGeneratorImpl();
         final String resultingReport = reportGenerator.getReport();
 
-        // 6. Write the received report into the destination file
         FileWriter fileWriter = new FileWriterImpl();
         fileWriter.write(resultingReport, outputFilePath);
 
