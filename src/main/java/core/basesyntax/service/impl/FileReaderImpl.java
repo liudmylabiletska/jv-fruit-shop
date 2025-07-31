@@ -11,8 +11,7 @@ public class FileReaderImpl implements FileReader {
     @Override
     public List<String> read(String filePath) {
         try {
-            return Files.readAllLines(Paths.get(filePath)).stream()
-                    .toList();
+            return Files.readAllLines(Paths.get(filePath));
         } catch (IOException e) {
             throw new RuntimeException("Error reading file from path: " + filePath, e);
         }

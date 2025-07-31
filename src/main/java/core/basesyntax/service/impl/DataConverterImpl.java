@@ -16,8 +16,11 @@ public class DataConverterImpl implements DataConverter {
         }
 
         for (String line : rawData) {
-            if (line == null || line.trim().isEmpty() || line.startsWith("type,")) {
-                continue;
+            if (line == null || line.trim().isEmpty()) {
+                throw new IllegalArgumentException("Invalid line detected: line is null or empty");
+            }
+            if (line.startsWith("type,")) {
+                continue; 
             }
             String[] parts = line.split(CSV_DELIMITER);
             if (parts.length != 3) {
@@ -26,13 +29,12 @@ public class DataConverterImpl implements DataConverter {
             }
 
             try {
-                String operationCode = parts[0].trim();
-                String fruitName = parts[1].trim();
-                int quantity = Integer.parseInt(parts[2].trim());
+                String operationCode = parts[0];
+                String fruitName = parts[1];
+                int quantity = Integer.parseInt(parts[2]);
 
-                if (quantity < 0) {
-                    throw new RuntimeException("Negative quantity found for fruit '" + fruitName
-                            + "' in line: '" + line + "'. Quantity must be non-negative.");
+                if (operationCode.startsWith(" ") || operationCode.endsWith(" ")) {
+                    throw new IllegalArgumentException("operationCode contains leading or trailing spaces");
                 }
 
                 FruitTransaction.Operation operation = FruitTransaction.Operation

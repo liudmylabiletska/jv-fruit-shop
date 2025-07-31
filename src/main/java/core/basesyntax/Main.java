@@ -1,31 +1,20 @@
 package core.basesyntax;
 
 import core.basesyntax.model.FruitTransaction;
-import core.basesyntax.service.DataConverter;
-import core.basesyntax.service.FileReader;
-import core.basesyntax.service.FileWriter;
-import core.basesyntax.service.ReportGenerator;
-import core.basesyntax.service.ShopService;
-import core.basesyntax.service.impl.DataConverterImpl;
-import core.basesyntax.service.impl.FileReaderImpl;
-import core.basesyntax.service.impl.FileWriterImpl;
-import core.basesyntax.service.impl.ReportGeneratorImpl;
-import core.basesyntax.service.impl.ShopServiceImpl;
-import core.basesyntax.strategy.BalanceOperation;
-import core.basesyntax.strategy.OperationHandler;
-import core.basesyntax.strategy.OperationStrategy;
-import core.basesyntax.strategy.PurchaseOperation;
-import core.basesyntax.strategy.ReturnOperation;
-import core.basesyntax.strategy.SupplyOperation;
+import core.basesyntax.service.*;
+import core.basesyntax.service.impl.*;
+import core.basesyntax.strategy.*;
 import core.basesyntax.strategy.impl.OperationStrategyImpl;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Main {
+    private final String inputFilePath = "src/main/resources/reportToRead.csv";
+    private final String outputFilePath = "src/main/resources/finalReport.csv";
+
     public static void main(String[] arg) {
-        final String inputFilePath = "src/main/resources/reportToRead.csv";
-        final String outputFilePath = "src/main/resources/finalReport.csv";
 
         FileReader fileReader = new FileReaderImpl();
         final List<String> inputReport = fileReader.read(inputFilePath);
@@ -53,6 +42,6 @@ public class Main {
         fileWriter.write(resultingReport, outputFilePath);
 
         System.out.println("Fruit shop report generated successfully!");
-        System.out.println("Check '" + outputFilePath + "' for the output.");
+        System.out.println("Check '" + OUTPUT_FILE_PATH + "' for the output.");
     }
 }
