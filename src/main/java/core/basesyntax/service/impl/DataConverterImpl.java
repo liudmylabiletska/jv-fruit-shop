@@ -9,19 +9,20 @@ public class DataConverterImpl implements DataConverter {
     private static final String CSV_DELIMITER = ",";
 
     @Override
-    public List<FruitTransaction> convertToTransaction(List<String> rawData) {
+    public List<FruitTransaction> convert(List<String> data) {
         List<FruitTransaction> transactions = new ArrayList<>();
-        if (rawData == null || rawData.isEmpty()) {
+        if (data == null || data.isEmpty()) {
             return transactions;
         }
 
-        for (String line : rawData) {
+        for (String line : data) {
             if (line == null || line.trim().isEmpty()) {
                 throw new IllegalArgumentException("Invalid line detected: line is null or empty");
             }
             if (line.startsWith("type,")) {
-                continue; 
+                continue;
             }
+
             String[] parts = line.split(CSV_DELIMITER);
             if (parts.length != 3) {
                 throw new RuntimeException("Invalid data format in line: '" + line
@@ -29,16 +30,12 @@ public class DataConverterImpl implements DataConverter {
             }
 
             try {
-                String operationCode = parts[0];
-                String fruitName = parts[1];
-                int quantity = Integer.parseInt(parts[2]);
+                String operationCode = parts[0].trim();
+                String fruitName = parts[1].trim();
+                int quantity = Integer.parseInt(parts[2].trim());
 
-                if (operationCode.startsWith(" ") || operationCode.endsWith(" ")) {
-                    throw new IllegalArgumentException("operationCode contains leading or trailing spaces");
-                }
-
-                FruitTransaction.Operation operation = FruitTransaction.Operation
-                        .getByCode(operationCode);
+                FruitTransaction.Operation operation = FruitTransaction
+                        .Operation.getByCode(operationCode);
                 transactions.add(new FruitTransaction(operation, fruitName, quantity));
 
             } catch (NumberFormatException e) {
@@ -47,6 +44,7 @@ public class DataConverterImpl implements DataConverter {
                 throw new RuntimeException("Invalid operation code in line: '" + line + "'", e);
             }
         }
+
         return transactions;
     }
 }
