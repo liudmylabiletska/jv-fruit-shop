@@ -16,7 +16,7 @@ public class DataConverterImpl implements DataConverter {
         }
 
         for (String line : data) {
-            if (line == null || line.trim().isEmpty()) {
+            if (line == null || line.isEmpty()) {
                 throw new IllegalArgumentException("Invalid line detected: line is null or empty");
             }
             if (line.startsWith("type,")) {
@@ -30,9 +30,9 @@ public class DataConverterImpl implements DataConverter {
             }
 
             try {
-                String operationCode = parts[0].trim();
-                String fruitName = parts[1].trim();
-                int quantity = Integer.parseInt(parts[2].trim());
+                String operationCode = parts[0];
+                String fruitName = parts[1];
+                int quantity = Integer.parseInt(parts[2]);
 
                 FruitTransaction.Operation operation = FruitTransaction
                         .Operation.getByCode(operationCode);
