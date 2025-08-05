@@ -19,10 +19,11 @@ public class DataConverterImpl implements DataConverter {
         for (String line : data) {
             String trimmedLine = line.trim();
             if (trimmedLine.isEmpty()) {
-                continue; // Пропускаємо порожні рядки
+                continue;
             }
-            if (trimmedLine.startsWith(HEADER_PREFIX) && trimmedLine.split(CSV_DELIMITER)[0].equalsIgnoreCase(HEADER_PREFIX)) {
-                continue; // Пропускаємо рядки заголовків, навіть якщо вони повторюються або містять зайві пробіли
+            if (trimmedLine.startsWith(HEADER_PREFIX)
+                    && trimmedLine.split(CSV_DELIMITER)[0].equalsIgnoreCase(HEADER_PREFIX)) {
+                continue;
             }
 
             String[] parts = trimmedLine.split(CSV_DELIMITER);
