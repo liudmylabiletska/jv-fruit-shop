@@ -49,7 +49,7 @@ public class Main {
         FileWriter fileWriter = new FileWriterImpl();
         fileWriter.write(resultingReport, OUTPUT_FILE_PATH);
 
-        System.out.println("Fruit shop report generated successfully!");
-        System.out.println("Check '" + OUTPUT_FILE_PATH + "' for the output.");
+        System.out.println("Report generation completed.");
+        System.out.println("Output saved to: " + OUTPUT_FILE_PATH);
     }
 }
