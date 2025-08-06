@@ -26,7 +26,7 @@ public class Main {
     private static final String INPUT_FILE_PATH = "src/main/resources/reportToRead.csv";
     private static final String OUTPUT_FILE_PATH = "src/main/resources/finalReport.csv";
 
-    public static void main(String[] args) {
+    public static void main(String[] arg) {
         FileReader fileReader = new FileReaderImpl();
         List<String> inputReport = fileReader.read(INPUT_FILE_PATH);
 
@@ -47,9 +47,6 @@ public class Main {
         String resultingReport = reportGenerator.getReport();
 
         FileWriter fileWriter = new FileWriterImpl();
-        fileWriter.write(resultingReport, OUTPUT_FILE_PATH);
-
-        System.out.println("Report generation completed.");
-        System.out.println("Output saved to: " + OUTPUT_FILE_PATH);
+        fileWriter.write(resultingReport, "finalReport.csv");
     }
 }

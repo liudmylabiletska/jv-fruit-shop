@@ -17,25 +17,35 @@ public class DataConverterImpl implements DataConverter {
         }
 
         for (String line : data) {
-            String trimmedLine = line.trim();
-            if (trimmedLine.isEmpty()) {
-                continue;
-            }
-            if (trimmedLine.startsWith(HEADER_PREFIX)
-                    && trimmedLine.split(CSV_DELIMITER)[0].equalsIgnoreCase(HEADER_PREFIX)) {
+            String processedLine = line.trim();
+            if (processedLine.isEmpty()) {
                 continue;
             }
 
-            String[] parts = trimmedLine.split(CSV_DELIMITER);
+            if (processedLine.startsWith(HEADER_PREFIX)
+                    && processedLine.split(CSV_DELIMITER)[0]
+                    .equalsIgnoreCase(HEADER_PREFIX)) {
+                continue;
+            }
+
+            String[] parts = processedLine.split(CSV_DELIMITER);
             if (parts.length != 3) {
                 throw new RuntimeException("Invalid data format in line: '" + line
                         + "'. Expected 'type,fruit,quantity'.");
             }
 
             try {
-                String operationCode = parts[0].trim();
-                String fruitName = parts[1].trim();
-                int quantity = Integer.parseInt(parts[2].trim());
+                String operationCode = parts[0];
+                String fruitName = parts[1];
+                String quantityString = parts[2];
+
+                if (operationCode.contains(" ") || fruitName.contains(" ")
+                        || quantityString.contains(" ")) {
+                    throw new RuntimeException("Invalid data format: "
+                            + "fields contain unexpected spaces. Line: '" + line + "'");
+                }
+
+                int quantity = Integer.parseInt(quantityString);
 
                 FruitTransaction.Operation operation = FruitTransaction
                         .Operation.getByCode(operationCode);

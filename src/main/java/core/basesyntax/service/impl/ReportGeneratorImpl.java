@@ -23,6 +23,6 @@ public class ReportGeneratorImpl implements ReportGenerator {
         if (fruitStorage.isEmpty()) {
             return REPORT_HEADER;
         }
-        return reportBuilder.toString().trim();
+        return reportBuilder.toString();
     }
 }
