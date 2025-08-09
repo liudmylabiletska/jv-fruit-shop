@@ -47,6 +47,6 @@ public class Main {
         String resultingReport = reportGenerator.getReport();
 
         FileWriter fileWriter = new FileWriterImpl();
-        fileWriter.write(resultingReport, "finalReport.csv");
+        fileWriter.write(resultingReport, OUTPUT_FILE_PATH);
     }
 }
